@@ -15,3 +15,8 @@ CARS_BRANDS = (
     ('chevrolet', 'Chevrolet'),
     ('porsche', 'Porsche')
 )
+
+TRANSMISSION_OPTIONS = (
+    ('automatic', 'Automatic'),
+    ('manual', 'Manual'),
+)

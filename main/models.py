@@ -1,7 +1,8 @@
 import uuid
 from django.db import models
-from .consts import CARS_BRANDS
-from users.models import Profile
+from .consts import CARS_BRANDS, TRANSMISSION_OPTIONS
+from users.models import Profile, Locations
+from .utils import user_listings_path
 # Create your models here.
 
 
@@ -12,3 +13,15 @@ class Listing(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     seller = models.ForeignKey(Profile, on_delete=models.CASCADE)
     brand = models.CharField(max_length=24, choices=CARS_BRANDS, default=None)
+    model = models.CharField(max_length=64,)
+    vin = models.CharField(max_length=17,)
+    mileage = models.IntegerField(default=0,)
+    color = models.CharField(max_length=24,)
+    description = models.TextField()
+    engine = models.CharField(max_length=24,)
+    transmission = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS)
+    location = models.OneToOneField(Locations, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to=user_listings_path)
+
+    def __str__(self):
+        return f'{self.seller.user.username}\'s Listing - {self.model}'
